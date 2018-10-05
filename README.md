@@ -41,7 +41,7 @@ Installation
 ### Using [Composer](https://getcomposer.org/)
 
 ```sh
-composer require mgf-agency/kirby-twig
+composer require mgfagency/kirby-twig
 ```
 
 Usage

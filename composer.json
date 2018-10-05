@@ -4,8 +4,7 @@
     "type": "kirby-plugin",
     "version": "1.0.0",
     "require": {
-        "twig/twig": "^2.5",
-        "composer/installers": "~1.0"
+        "twig/twig": "^2.5"
     },
     "autoload": {
         "files": [
@@ -25,6 +24,5 @@
             "name": "Florens Verschelde",
             "email": "florens@fvsch.com"
         }
-    ],
-    "minimum-stability": "beta"
+    ]
 }

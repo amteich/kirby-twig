@@ -119,8 +119,8 @@ class Environment
         $options = [
             'core' => [
                 'debug' => $this->debug,
-                'strict_variables' => option('fvsch.twig.strict', $this->debug),
-                'autoescape' => option('fvsch.twig.autoescape', 'html'),
+                'strict_variables' => option('mgfagency.twig.strict', $this->debug),
+                'autoescape' => option('mgfagency.twig.autoescape', 'html'),
                 'cache' => false
             ],
             'namespace' => [
@@ -132,19 +132,19 @@ class Environment
             'paths' => [],
             'function' => $this->cleanNames(array_merge(
                 $this->defaultFunctions,
-                option('fvsch.twig.env.functions', [])
+                option('mgfagency.twig.env.functions', [])
             )),
-            'filter' => $this->cleanNames(option('fvsch.twig.env.filters', []))
+            'filter' => $this->cleanNames(option('mgfagency.twig.env.filters', []))
         ];
 
         // Set cache directory
-        if (option('fvsch.twig.cache')) {
+        if (option('mgfagency.twig.cache')) {
             $options['core']['cache'] = kirby()->roots()->cache() . '/twig';
         }
 
         // Look at 'twig.abc.xYz' options to find namespaces, functions & filters
         foreach (array_keys(App::instance()->options()) as $key) {
-            $p = '/^fvsch.twig\.(env\.)?([a-z]+)\.(\*?[a-zA-Z][a-zA-Z0-9_\-]*)$/';
+            $p = '/^mgfagency.twig\.(env\.)?([a-z]+)\.(\*?[a-zA-Z][a-zA-Z0-9_\-]*)$/';
             if (preg_match($p, $key, $m) === 1 && array_key_exists($m[2], $options)) {
                 $options[ $m[2] ][ $m[3] ] = option($key);
             }
@@ -159,7 +159,7 @@ class Environment
             $loader->addPath($path, $key);
         }
         
-        $options['paths'] = option('fvsch.twig.paths', []);
+        $options['paths'] = option('mgfagency.twig.paths', []);
         foreach ($options['paths'] as $path) {
             $loader->addPath($path);
         }

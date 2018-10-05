@@ -49,7 +49,7 @@ class Template extends \Kirby\Cms\Template
     // public function file($name)
     public function file(): ?string
     {
-        $usephp = option('fvsch.twig.usephp', true);
+        $usephp = option('mgfagency.twig.usephp', true);
         $type = $this->type();
         $name = $type !== null && $type !== 'html' ? $this->name() . '.' . $type : $this->name();
 
