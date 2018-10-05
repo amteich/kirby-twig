@@ -1,0 +1,11 @@
+{
+    "name": "twig",
+    "description": "Kirby Twig Plugin",
+    "author": "Florens Verschelde <florens@fvsch.com>",
+    "contributors": [
+        "Christian Zehetner <christian@mgf.at>"
+    ],
+    "license": "MIT",
+    "type": "kirby-plugin",
+    "version": "1.0.0"
+}

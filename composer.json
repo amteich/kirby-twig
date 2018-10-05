@@ -1,0 +1,30 @@
+{
+    "name": "mgfagency/kirby-twig",
+    "description": "Twig templating support for Kirby CMS",
+    "type": "kirby-plugin",
+    "version": "1.0.0",
+    "require": {
+        "twig/twig": "^2.5",
+        "composer/installers": "~1.0"
+    },
+    "autoload": {
+        "files": [
+            "config.php"
+        ],
+        "psr-4": {
+            "mgfagency\\Twig\\": "src/classes/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Zehetner",
+            "email": "christian@mgf.at"
+        },
+        {
+            "name": "Florens Verschelde",
+            "email": "florens@fvsch.com"
+        }
+    ],
+    "minimum-stability": "beta"
+}
