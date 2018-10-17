@@ -3,8 +3,15 @@
     "description": "Twig templating support for Kirby CMS",
     "type": "kirby-plugin",
     "version": "1.0.2",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/k-next/kirby"
+        }
+    ],
     "require": {
-        "twig/twig": "^2.5"
+        "twig/twig": "^2.5",
+        "composer/installers": "~1.0"
     },
     "autoload": {
         "files": [
