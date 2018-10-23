@@ -1,8 +1,8 @@
 {
     "name": "mgfagency/kirby-twig",
     "description": "Twig templating support for Kirby CMS",
-    "type": "kirby-plugin",
-    "version": "1.0.3",
+    "type": "plugin",
+    "version": "1.0.4",
     "repositories": [
         {
             "type": "vcs",
@@ -11,7 +11,7 @@
     ],
     "require": {
         "twig/twig": "^2.5",
-        "composer/installers": "~1.0"
+        "getkirby/cms": "dev-master as 3.0.0"
     },
     "autoload": {
         "files": [
