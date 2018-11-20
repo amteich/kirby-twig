@@ -209,7 +209,11 @@ class LoaderFilesystem implements Twig_LoaderInterface, Twig_ExistsLoaderInterfa
 
             // Extend name to path with extension for standard Twig_Loader_Filesystem
             $templatevariants = [];
-            $templatevariants[] = $shortname . '/' . $shortname . '.twig';
+
+            // make subfolder work form/textfield/textfield.twig
+            $templatename = substr(strrchr($shortname, '/'), 1);
+            
+            $templatevariants[] = $shortname . '/' . $templatename . '.twig';
             $templatevariants[] = $shortname;
 
             foreach ($templatevariants as $templatevariant) {
