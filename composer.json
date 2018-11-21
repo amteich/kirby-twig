@@ -2,7 +2,7 @@
     "name": "mgfagency/kirby-twig",
     "description": "Twig templating support for Kirby CMS",
     "type": "plugin",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "repositories": [
         {
             "type": "vcs",
