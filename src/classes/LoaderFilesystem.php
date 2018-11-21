@@ -211,10 +211,19 @@ class LoaderFilesystem implements Twig_LoaderInterface, Twig_ExistsLoaderInterfa
             $templatevariants = [];
 
             // make subfolder work form/textfield/textfield.twig
-            $templatename = substr(strrchr($shortname, '/'), 1);
+            $templatename = $shortname;
+            if (strpos($shortname, '/') !== false) {
+                $templatename = substr(strrchr($shortname, '/'), 1);    
+            }
             
             $templatevariants[] = $shortname . '/' . $templatename . '.twig';
             $templatevariants[] = $shortname;
+
+            // if ($shortname != "layout.twig" && $shortname != "home.twig" && $shortname != "header" && $shortname != "logo") {
+            //     var_dump($shortname);
+            //     var_dump($templatevariants);
+            //     exit;
+            // }
 
             foreach ($templatevariants as $templatevariant) {
                 if (is_file($path.'/'.$templatevariant)) {
