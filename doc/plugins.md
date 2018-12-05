@@ -10,8 +10,8 @@ Using Twig templates with the Patterns or Modules plugins requires a few steps.
 First, you should declare Twig namespaces for the `patterns` and `modules` folders in your config:
 
 ```php
-c::set('twig.namespace.modules', dirname(__DIR__) . '/modules');
-c::set('twig.namespace.patterns', dirname(__DIR__) . '/patterns');
+c::set('mgfagency.twig.namespace.modules', dirname(__DIR__) . '/modules');
+c::set('mgfagency.twig.namespace.patterns', dirname(__DIR__) . '/patterns');
 ```
 
 Now let’s say you’re using the Patterns plugin. You could have a file structure like this:
@@ -58,13 +58,13 @@ For project-specific plugins, though, if your project is using Twig, you might w
  * Add a Twig namespace for our plugin's templates
  * Allows including with {% include '@myplugin/mytemplate.twig' %}
  */
-c::set('twig.namespace.myplugin', __DIR__ . '/templates');
+c::set('mgfagency.twig.namespace.myplugin', __DIR__ . '/templates');
 
 /**
  * Expose functions from our plugin to the Twig environment
  */
-c::set('twig.function.myPluginHelper', 'myPluginHelper');
-c::set('twig.function.myOtherHelper', 'myOtherHelper');
+c::set('mgfagency.twig.function.myPluginHelper', 'myPluginHelper');
+c::set('mgfagency.twig.function.myOtherHelper', 'myOtherHelper');
 ```
 
 See [“Using your own functions in templates”](functions.md) for more details about exposing functions, static methods and classes to templates.

@@ -8,13 +8,13 @@ Customizing the Twig environment
 ```php
 // Define a directory as a Twig namespace, that can be used as:
 //   {% include '@mynamespace/something.twig' %}
-c::set('twig.namespace.mynamespace', kirby()->roots()->index().'/mydirectory');
+c::set('mgfagency.twig.namespace.mynamespace', kirby()->roots()->index().'/mydirectory');
 
 // Expose an existing function in templates
-c::set('twig.function.myfunction', 'myCustomFunction');
+c::set('mgfagency.twig.function.myfunction', 'myCustomFunction');
 
 // Expose an existing function in templates as a filter
-c::set('twig.filter.myfilter', 'myCustomFilter');
+c::set('mgfagency.twig.filter.myfilter', 'myCustomFilter');
 ```
 
 See [Using your own functions in templates](functions.md) for details about Twig functions and filters.
@@ -28,7 +28,7 @@ Advanced
 ```php
 // Should we use .php templates as fallback when .twig
 // templates don't exist? Set to false to only allow Twig templates
-c::set('twig.usephp', true);
+c::set('mgfagency.twig.usephp', true);
 
 // Use Twig’s PHP cache?
 // Disabled by default (starting from 2.2).
@@ -37,13 +37,13 @@ c::set('twig.usephp', true);
 // version of the template when building the response.
 // But if you have static text content in your Twig templates, you won’t
 // see content changes until you manually remove the `site/cache/twig` folder.
-c::set('twig.cache', false);
+c::set('mgfagency.twig.cache', false);
 
 // Disable autoescaping or specify autoescaping type
 // http://twig.sensiolabs.org/doc/api.html#environment-options
-c::set('twig.autoescape', true);
+c::set('mgfagency.twig.autoescape', true);
 
 // Should Twig throw errors when using undefined variables or methods?
 // Defaults to the value of the 'debug' option
-c::set('twig.strict', c::get('debug', false));
+c::set('mgfagency.twig.strict', c::get('debug', false));
 ```

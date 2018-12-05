@@ -17,7 +17,7 @@ The expected syntax for these configuration options is:
 
 ```php
 // In site/config/config.php:
-c::set('twig.function.myFunctionName', $someFunction);
+c::set('mgfagency.twig.function.myFunctionName', $someFunction);
 ```
 
 Where:
@@ -46,7 +46,7 @@ function sayHello($who='') {
 You can make it available as a Twig function:
 
 ```php
-c::set('twig.function.sayHello', 'sayHello');
+c::set('mgfagency.twig.function.sayHello', 'sayHello');
 ```
 
 ```twig
@@ -57,7 +57,7 @@ c::set('twig.function.sayHello', 'sayHello');
 Or you could expose it as a Twig filter:
 
 ```php
-c::set('twig.filter.sayHello', 'sayHello');
+c::set('mgfagency.twig.filter.sayHello', 'sayHello');
 ```
 
 ```twig
@@ -72,7 +72,7 @@ I recommend sticking to the Twig function syntax, and only using Twig’s built-
 The `twig.function.[…]` and `twig.filter.[…]` configs accept anonymous functions (called closures in PHP):
 
 ```php
-c::set('twig.function.sayHello', function($who='') {
+c::set('mgfagency.twig.function.sayHello', function($who='') {
     return 'Hello' . (is_string($who) ? ' ' . $who : '');
 }
 ```
@@ -82,8 +82,8 @@ c::set('twig.function.sayHello', function($who='') {
 You can also expose static methods, using the string syntax:
 
 ```php
-c::set('twig.function.setCookie', 'Cookie::set');
-c::set('twig.function.getCookie', 'Cookie::get');
+c::set('mgfagency.twig.function.setCookie', 'Cookie::set');
+c::set('mgfagency.twig.function.getCookie', 'Cookie::get');
 ```
 
 ```twig
@@ -104,7 +104,7 @@ By default, Twig escapes strings returned by functions, to avoid security attack
 Alternatively, when declaring a Twig function you can mark it as safe for HTML output by adding a `*` before its name, like this:
 
 ```php
-c::set('twig.function.*sayHello', 'sayHello');
+c::set('mgfagency.twig.function.*sayHello', 'sayHello');
 ```
 
 
@@ -128,7 +128,7 @@ class VeryCoolThing
 }
 
 // site/config/config.php
-c::set('twig.function.getCoolStuff', function(){
+c::set('mgfagency.twig.function.getCoolStuff', function(){
   return new VeryCoolThing();
 });
 ```
@@ -151,7 +151,7 @@ Alternatively, you could define and expose a generic function that allows instan
  * Giving this function the name 'new' in Twig templates, for
  * backwards compatibility with Kirby Twig 2.x.
  */
-c::set('twig.function.new', function($name) {
+c::set('mgfagency.twig.function.new', function($name) {
   if (!class_exists($name)) {
     throw new Twig_Error_Runtime("Unknown class \"$name\"");
   }
