@@ -92,5 +92,5 @@ You can find a full list of options in the [options documentation](doc/options.m
 
 ## Credits
 
-- Twig library: Fabien Potencier and contributors / [License](vendor/twig/twig/LICENSE)
+- Twig library: Fabien Potencier and contributors
 - Twig plugin for Kirby 2: Florens Verschelde
