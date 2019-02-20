@@ -17,7 +17,9 @@
 /vendor/**/docs/*
 /vendor/**/example/*
 /vendor/**/examples/*
-/vendor/**/test/*
 /vendor/**/tests/*
 /vendor/**/php4/*
 /vendor/getkirby/composer-installer
+
+# Twig
+/vendor/twig/twig/test
