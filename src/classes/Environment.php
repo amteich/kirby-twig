@@ -12,6 +12,7 @@ use Kirby\Toolkit\Tpl;
 use Twig_Environment;
 use Twig_SimpleFunction;
 use Twig_SimpleFilter;
+use Twig_SimpleTest;
 use Twig_Extension_Debug;
 use Twig_Error;
 use Twig_Error_Loader;
@@ -134,7 +135,8 @@ class Environment
                 $this->defaultFunctions,
                 option('mgfagency.twig.env.functions', [])
             )),
-            'filter' => $this->cleanNames(option('mgfagency.twig.env.filters', []))
+            'filter' => $this->cleanNames(option('mgfagency.twig.env.filters', [])),
+            'test' => $this->cleanNames(option('mgfagency.twig.env.tests', [])),
         ];
 
         // Set cache directory
@@ -176,6 +178,9 @@ class Environment
         }
         foreach ($options['filter'] as $name => $func) {
             $this->addCallable('filter', $name, $func);
+        }
+        foreach ($options['test'] as $name => $func) {
+            $this->addCallable('test', $name, $func);
         }
 
         // Make sure the instance is stored / overwritten
@@ -388,6 +393,9 @@ class Environment
         }
         if ($type === 'filter') {
             $this->twig->addFilter(new Twig_SimpleFilter($twname, $func, $params));
+        }
+        if ($type === 'test') {
+            $this->twig->addTest(new Twig_SimpleTest($twname, $func));
         }
     }
 }
