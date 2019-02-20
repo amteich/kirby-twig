@@ -1,5 +1,4 @@
-Twig Plugin for Kirby CMS
-=========================
+# Twig Plugin for Kirby CMS
 
 <img src="doc/kirby-twig.png" width="200" alt="">
 
@@ -7,8 +6,7 @@ Twig Plugin for Kirby CMS
 -   PHP templates still work, you don’t have to rewrite them if you don’t want to.
 
 
-What it looks like
-------------------
+## What it looks like
 
 Before:
 
@@ -35,24 +33,34 @@ After:
 ```
 
 
-Installation
-------------
+## Installation
 
-### Using [Composer](https://getcomposer.org/)
+### Download
 
-```sh
+Download and copy this repository to `/site/plugins/kirby-twig`.
+
+### Git submodule
+
+```
+git submodule add https://github.com/mgfagency/kirby-twig.git site/plugins/kirby-twig
+```
+
+### Composer
+
+```
 composer require mgfagency/kirby-twig
 ```
 
-Usage
------
+****
+
+## Usage
 
 ### Page templates
 
 Now that the plugin is installed and active, you can write Twig templates in the `site/templates` directory. For example, if the text file for your articles is named `post.txt`, you could have a `post.twig` template like this:
 
 ```twig
-{% extends '@templates/layout.twig' %}
+{% extends 'layout.twig' %}
 {% block content %}
   <article>
     <h1>{{ page.title }}</h1>
@@ -63,43 +71,26 @@ Now that the plugin is installed and active, you can write Twig templates in the
 
 See the `{% extends '@templates/layout.twig' %}` and `{% block content %}` parts? They’re a powerful way to manage having a common page layout for many templates, and only changing the core content (and/or other specific parts). Read [our Twig templating guide](doc/guide.md) for more information.
 
-### Rendering a template in PHP: the `twig` helper
+## Options
 
-This plugin also enables a `twig` PHP function for rendering template files and strings, like this:
+You can find a full list of options in the [options documentation](doc/options.md).
 
-```php
-<?php
+****
 
-// Render a simple template from the site/snippets directory
-echo twig('@snippets/header.twig');
+## More documentation
 
-// Same, but passing some additionnal variables
-echo twig('@snippets/header.twig', ['sticky'=>false]);
+- [Twig templating guide for Kirby](doc/guide.md)
+- [Available options](doc/options.md)
+- [Using your own functions in templates](doc/functions.md)
+- [Using Kirby Twig with other plugins](doc/plugins.md)
+- [Rendering a template in PHP: the `twig` helper](doc/twighelper.md)
+- [Displaying Twig errors](doc/errors.md)
 
-// Render a string
-echo twig('Hello {{ who }}', ['who'=>'World!']);
-```
+## License
 
-If you work with Twig templates for pages, you might not need the `twig()` helper at all. But it can be useful [when working with the Modules and Patterns plugins](doc/plugins.md).
+[MIT](LICENSE.md)
 
+## Credits
 
-More documentation
-------------------
-
-Recommended reads:
-
--   [Twig templating guide for Kirby](doc/guide.md)
--   [Displaying Twig errors](doc/errors.md)
-
-Other topics:
-
--   [Complete options documentation](doc/options.md)
--   [Using your own functions in templates](doc/functions.md)
--   [Using Kirby Twig with other plugins](doc/plugins.md)
-
-
-Credits
--------
-
--   Twig library: Fabien Potencier and contributors / [New BSD License]([lib/Twig/LICENSE](lib/Twig/LICENSE))
--   Twig plugin for Kirby: Florens Verschelde / [MIT License](LICENSE)
+- Twig library: Fabien Potencier and contributors / [New BSD License]([lib/Twig/LICENSE](lib/Twig/LICENSE))
+- Twig plugin for Kirby 2: Florens Verschelde

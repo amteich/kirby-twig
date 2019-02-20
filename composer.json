@@ -1,26 +1,8 @@
 {
     "name": "mgfagency/kirby-twig",
     "description": "Twig templating support for Kirby CMS",
-    "type": "plugin",
+    "type": "kirby-plugin",
     "version": "1.0.6",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/k-next/kirby"
-        }
-    ],
-    "require": {
-        "twig/twig": "^2.5",
-        "getkirby/cms": "dev-master as 3.0.0"
-    },
-    "autoload": {
-        "files": [
-            "config.php"
-        ],
-        "psr-4": {
-            "mgfagency\\Twig\\": "src/classes/"
-        }
-    },
     "license": "MIT",
     "authors": [
         {
@@ -31,5 +13,17 @@
             "name": "Florens Verschelde",
             "email": "florens@fvsch.com"
         }
-    ]
+    ],
+    "require": {
+        "getkirby/composer-installer": "^1.1",
+        "twig/twig": "^2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "mgfagency\\Twig\\": "src/classes/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
 }
