@@ -1,37 +1,21 @@
-Displaying Twig errors
-======================
-
+# Displaying Twig errors
 
 Let’s say something is wrong in your template. The syntax is bad, or you used a Twig tag that doesn’t exist. What will happen now?
 
 We try to only show informative errors when it’s safe to do so. If you don’t ask this plugin to show you error information, you might get *nothing*, or a standard error page (maybe your own 404 page).
 
-
-Switching to debug mode
------------------------
+## Switching to debug mode
 
 To be precise, we only show an error with relevant technical information when the `debug` option is on. You can set it in your config like this:
 
 ```php
 <?php /* site/config/config.localhost.php */
-c::set('debug', true);
+'debug' => true
 ```
 
-Note that you should avoid enabling the `debug` option on a production website. You can use domain-specific config files with Kirby:
+Note that you should avoid enabling the `debug` option on a production website. You can use [domain-specific config files with Kirby](https://getkirby.com/docs/guide/configuration#multi-environment-setup).
 
-```
-site/
-    config/
-        config.php
-        config.localhost.php
-        config.www.yourdomain.com.php
-```
-
-If you’re testing your website on `http://localhost/`, then Kirby will load the `site/config/config.localhost.php` file. Replace "localhost" with the domain name you’re using for development.
-
-
-What errors look like
----------------------
+## What errors look like
 
 We’re showing different things depending on (A) if debug mode is active and (B) if we’re rendering a full page using Twig, or just a fragment with the `twig()` helper function.
 
@@ -65,4 +49,4 @@ We’re showing different things depending on (A) if debug mode is active and (B
   </tr>
 </table>
 
-*Note for Kirby 2.4+ users: we are not using the Whoops error reporting page, with its full stack trace explorer, because it’s not really useful here — it shows PHP code instead of the faulty Twig code.*
+*We are not using the Whoops error reporting page, with its full stack trace explorer, because it’s not really useful here — it shows PHP code instead of the faulty Twig code.*

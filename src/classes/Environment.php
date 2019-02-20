@@ -50,18 +50,14 @@ class Environment
      */
     private $defaultFunctions = [
         '*attr',
-        // Get config value
-        'option',
-        // Skipping: call - Allows calling any PHP function
+        'asset',
+        'collection',
         '*csrf',
         '*csrf_field',
         '*honeypot_field',
         '*css',
-        // Skipping: dump - Twig has one, and its ouput seems buggy anyway (prints the result twice?)
-        // Skipping: e, ecco - Twig syntax is simple: {{ condition ? 'a' : 'b' }}
-        // Skipping: email - Send emails from controllers, not templates
+        // Skipping: e - Twig syntax is simple: {{ condition ? 'a' : 'b' }}
         '*esc',
-        '*excerpt',
         'get',
         '*gist',
         'go',
@@ -69,38 +65,33 @@ class Environment
         '*h', '*html',
         '*image',
         'invalid',
-        // Get locale-specific config (or translation)
-        'l::get',
         '*js',
         'kirby',
         '*kirbytag',
+        '*kirbytags',
         '*kirbytext',
-        // Skipping: l - We're adding it manually
         '*markdown',
+        'option',   // Get config value
         'memory',
         '*multiline',
         'page',
         'pages',
         'param',
         'params',
-        // From the Patterns plugin - similar to snippet
-        '*pattern',
         // Skipping: r - Same reason as for ecco/e
+        'timestamp',
         'site',
         'size',
         '*smartypants',
         '*snippet',
-        // Skipping: structure - For writing data to pages, not for display
-        // Skipping: textfile - For making content file names
-        'thisUrl',
-        '*thumb',
+        '*svg',
+        't',
+        'tc',
         '*twitter',
-        // Skipping: upload - Manage uploading from a controller
         'u', 'url',
+        '*video',
         '*vimeo',
         '*widont',
-        '*xml',
-        'yaml',
         '*youtube',
     ];
 
@@ -128,7 +119,6 @@ class Environment
                 'templates' => $this->templateDir,
                 'snippets' => kirby()->roots()->snippets(),
                 'plugins' => kirby()->roots()->plugins(),
-                'assets' => kirby()->roots()->assets()
             ],
             'paths' => [],
             'function' => $this->cleanNames(array_merge(
@@ -151,21 +141,21 @@ class Environment
                 $options[ $m[2] ][ $m[3] ] = option($key);
             }
         }
-        
+
         // Set up the template loader
         $loader = new LoaderFilesystem($this->templateDir);
-        $canSkip = ['snippets', 'plugins', 'assets'];   
+        $canSkip = ['snippets', 'plugins', 'assets'];
         foreach ($options['namespace'] as $key=>$path) {
             if (!is_string($path)) continue;
             if (in_array($key, $canSkip) && !file_exists($path)) continue;
             $loader->addPath($path, $key);
         }
-        
+
         $options['paths'] = option('mgfagency.twig.paths', []);
         foreach ($options['paths'] as $path) {
             $loader->addPath($path);
         }
-        
+
         // Start up Twig
         $this->twig = new Twig_Environment($loader, $options['core']);
 
@@ -295,7 +285,7 @@ class Environment
                 $source = $this->twig->getLoader()->getSourceContext($name);
                 $path = $source->getPath();
                 $code = $source->getCode();
-                
+
             }
             catch (Twig_Error $err2) {}
         }

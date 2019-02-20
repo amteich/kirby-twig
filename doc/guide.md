@@ -1,12 +1,8 @@
-Twig templating guide
-=====================
-
+# Twig templating guide
 
 This is a short guide on how to use Twig templates with Kirby CMS. It supposes that you have installed and enabled the Twig Plugin already.
 
-
-Twig basics
------------
+## Twig basics
 
 A few basic examples of Twig syntax:
 
@@ -34,8 +30,7 @@ A few basic examples of Twig syntax:
 ```
 
 
-Tips and tricks
----------------
+## Tips and tricks
 
 ### Undefined variables
 
@@ -68,8 +63,7 @@ By default, Twig will escape HTML tags and entities (to help prevent [cross-site
 ```
 
 
-Including stuff
----------------
+## Including stuff
 
 A very common pattern when using Twig is to create a “base” template that other templates will extend. For instance:
 
@@ -105,7 +99,6 @@ See the `@snippets` and `@templates` parts in our extends and includes? These ar
 -   `@templates`
 -   `@snippets`
 -   `@plugins`
--   `@assets`
 
 They all point to the corresponding directory (generally `site/snippets`, `site/plugins` etc.), and follow Kirby’s configuration if you have changed those paths.
 
@@ -117,11 +110,10 @@ Finally, note that you can use the `source()` function to output the contents of
 </script>
 ```
 
-To learn more about Twig, you should read [Twig for Template Designers](http://twig.sensiolabs.org/doc/1.x/templates.html) and the [Twig Documentation](http://twig.sensiolabs.org/doc/1.x/).
+To learn more about Twig, you should read [Twig for Template Designers](https://twig.symfony.com/doc/2.x/templates.html) and the [Twig Documentation](http://twig.sensiolabs.org/doc/2.x/).
 
 
-Kirby-specific variables and functions
---------------------------------------
+## Kirby-specific variables and functions
 
 ### Objects
 
@@ -172,58 +164,17 @@ You will need to do a little bit of translation between the PHP syntax in Kirby�
 
 Almost all of [Kirby’s helper functions](https://getkirby.com/docs/cheatsheet#helpers) are available in your Twig templates. This includes things like the `css()`, `js()` or `snippet()` functions.
 
-The only exceptions are:
-
--   helpers related to sending emails or writing to files, such as `email`, `upload`, `structure` and `textfile`;
--   and the `ecco` and `r` helpers, which are trivial to do with Twig syntax (for instance: `{{ condition ? 'yes' : 'no' }}` is the same as Kirby’s `<?php ecco(condition, 'yes', 'no') ?>`.
+The only exceptions are the `e` and `r` helpers, which are trivial to do with Twig syntax (for instance: `{{ condition ? 'yes' : 'no' }}` is the same as Kirby’s `<?php ecco(condition, 'yes', 'no') ?>`.
 
 ### Getting config values
 
--   Use the `c__get(configName, defaultValue)` function in Twig templates to get config values (shortcut for `c::get`).
--   Use the `l__get(configName, defaultValue)` function in Twig templates to get language-specific config values or translation strings (shortcut for `l::get`).
-
-### Kirby Toolkit
-
-The [Kirby Toolkit API](https://getkirby.com/docs/toolkit/api) is not available in Twig templates. Some methods, such as string comparisons, can be done directly with Twig syntax. Other things, like reading from a database, should probably be done in a controller instead (see the next section for more information on controllers).
+- Use the `option(configName, defaultValue)` function in Twig templates to get config values.
+- Use the `l(configName, defaultValue)` function in Twig templates to get language-specific config values or translation strings.
 
 ### Plugin functions
 
 Functions or classes defined by Kirby plugins will not be picked up in Twig templates. If you do want to use them in your templates, see: [Exposing functions and classes to Twig templates](functions.md).
 
+## Using controllers
 
-Using controllers
------------------
-
-You can send more data to templates by [writing a Controller](https://getkirby.com/docs/developer-guide/advanced/controllers). Don’t worry, it’s really easy.
-
-In the previous example, the part where we defined the `posts` variable could go in a controller file:
-
-```php
-<?php // site/controllers/blog.php
-
-return function($site, $pages, $page) {
-  $data = [];
-  $data['posts'] = $site->find('blog')->children()
-    ->filterBy('status', 'published')
-    ->sortBy('date', 'desc');
-  return $data;
-};
-```
-
-And in our template:
-
-```twig
-{# site/templates/blog.twig #}
-
-<h1>{{ page.title }}</h1>
-
-{% if posts.count %}
-  <ul>
-    {% for post in posts %}
-      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
-{% endif %}
-```
-
-Ain’t that better? Well, you decide. :) I like separating the “logic” from the HTML markup, but if you just want to write a template and be done, do what you like best.
+You can send more data to templates by [writing a Controller](https://getkirby.com/docs/guide/templates/controllers). 

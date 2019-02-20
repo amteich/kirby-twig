@@ -82,7 +82,6 @@ You can find a full list of options in the [options documentation](doc/options.m
 - [Twig templating guide for Kirby](doc/guide.md)
 - [Available options](doc/options.md)
 - [Using your own functions in templates](doc/functions.md)
-- [Using Kirby Twig with other plugins](doc/plugins.md)
 - [Rendering a template in PHP: the `twig` helper](doc/twighelper.md)
 - [Displaying Twig errors](doc/errors.md)
 
