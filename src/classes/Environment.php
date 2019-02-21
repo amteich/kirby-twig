@@ -14,6 +14,7 @@ use Twig_SimpleFilter;
 use Twig_SimpleTest;
 use Twig_Extension_Debug;
 use Twig_Error;
+use Twig_Loader_Filesystem;
 
 
 /**
@@ -142,7 +143,7 @@ class Environment
         }
 
         // Set up the template loader
-        $loader = new LoaderFilesystem($this->templateDir);
+        $loader = new Twig_Loader_Filesystem($this->templateDir);
         $canSkip = ['snippets', 'plugins', 'assets'];
         foreach ($options['namespace'] as $key=>$path) {
             if (!is_string($path)) continue;
