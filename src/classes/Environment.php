@@ -2,7 +2,6 @@
 
 namespace mgfagency\Twig;
 
-use Closure;
 use Kirby;
 use Response;
 use Kirby\Cms\App;
@@ -15,7 +14,6 @@ use Twig_SimpleFilter;
 use Twig_SimpleTest;
 use Twig_Extension_Debug;
 use Twig_Error;
-use Twig_Error_Loader;
 
 
 /**
@@ -137,6 +135,7 @@ class Environment
         // Look at 'twig.abc.xYz' options to find namespaces, functions & filters
         foreach (array_keys(App::instance()->options()) as $key) {
             $p = '/^mgfagency.twig\.(env\.)?([a-z]+)\.(\*?[a-zA-Z][a-zA-Z0-9_\-]*)$/';
+            $m = [];
             if (preg_match($p, $key, $m) === 1 && array_key_exists($m[2], $options)) {
                 $options[ $m[2] ][ $m[3] ] = option($key);
             }
