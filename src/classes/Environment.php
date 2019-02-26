@@ -104,7 +104,7 @@ class Environment
     {
         $kirby = Kirby::instance();
         $this->debug = option('debug');
-        $this->templateDir = $viewPath;
+        $this->templateDir = $kirby->root('templates');
 
         // Get environment & user config
         $options = [
@@ -144,6 +144,17 @@ class Environment
 
         // Set up the template loader
         $loader = new Twig_Loader_Filesystem($this->templateDir);
+
+        // add site templates dir if environment got initialized by a plugintemplate
+        if ($this->templateDir != $kirby->root('templates')) {
+            $loader->addPath($kirby->root('templates'));
+        }
+
+        // is viewpath in a plugin, add the pluginpath
+        if ($viewPath != $this->templateDir) {
+            $loader->addPath($viewPath);
+        }
+
         $canSkip = ['snippets', 'plugins', 'assets'];
         foreach ($options['namespace'] as $key=>$path) {
             if (!is_string($path)) continue;
@@ -154,6 +165,14 @@ class Environment
         $options['paths'] = option('mgfagency.twig.paths', []);
         foreach ($options['paths'] as $path) {
             $loader->addPath($path);
+        }
+
+        // load plugin component paths
+        foreach ($kirby->plugins() as $id => $plugin) {
+            if (isset($plugin->extends()['twigcomponents']))
+            {
+                $loader->addPath($plugin->extends()['twigcomponents']);
+            }
         }
 
         // Start up Twig
