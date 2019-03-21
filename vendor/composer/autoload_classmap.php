@@ -361,7 +361,6 @@ return array(
     'Twig_Util_DeprecationCollector' => $vendorDir . '/twig/twig/lib/Twig/Util/DeprecationCollector.php',
     'Twig_Util_TemplateDirIterator' => $vendorDir . '/twig/twig/lib/Twig/Util/TemplateDirIterator.php',
     'mgfagency\\Twig\\Environment' => $baseDir . '/src/classes/Environment.php',
-    'mgfagency\\Twig\\LoaderFilesystem' => $baseDir . '/src/classes/LoaderFilesystem.php',
     'mgfagency\\Twig\\Plugin' => $baseDir . '/src/classes/Plugin.php',
     'mgfagency\\Twig\\Template' => $baseDir . '/src/classes/Template.php',
 );
