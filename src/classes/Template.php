@@ -22,6 +22,13 @@ class Template extends \Kirby\Cms\Template
     protected $twig;
     protected $kirby;
 
+    /**
+     * Creates a new template object
+     *
+     * @param string $name
+     * @param string $type
+     * @param string $defaultType
+     */
     public function __construct(App $kirby, string $name, string $contentType = 'html', string $defaultType = 'html')
     {
         parent::__construct($name, $contentType, $defaultType);
@@ -30,6 +37,11 @@ class Template extends \Kirby\Cms\Template
         $this->kirby = $kirby;
     }
 
+    /**
+     * Returns the expected template file extension
+     *
+     * @return string
+     */
     public function extension(): string
     {
         return 'twig';
@@ -42,11 +54,11 @@ class Template extends \Kirby\Cms\Template
     }
 
     /**
-     * Returns a template file path by name
-     * @param string $name
-     * @return string
+     * Detects the location of the template file
+     * if it exists.
+     *
+     * @return string|null
      */
-    // public function file($name)
     public function file(): ?string
     {
         $usephp = option('mgfagency.twig.usephp', true);
@@ -94,14 +106,9 @@ class Template extends \Kirby\Cms\Template
     }
 
     /**
-     * Renders the template by page with the additional data
-     * @param Page|string $template
      * @param array $data
-     * @param boolean $return
      * @return string
-     * @throws Exception
      */
-    // public function render($template, $data = [], $return = true)
     public function render(array $data = []): string
     {
         if ($this->isTwig()) {
