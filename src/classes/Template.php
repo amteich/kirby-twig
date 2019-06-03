@@ -22,14 +22,14 @@ class Template extends \Kirby\Cms\Template
     protected $twig;
     protected $kirby;
 
-    public function __construct(App $kirby, string $name, string $type = 'html')
+    public function __construct(App $kirby, string $name, string $contentType = 'html', string $defaultType = 'html')
     {
-        parent::__construct($name, $type);
+        parent::__construct($name, $contentType, $defaultType);
         $viewPath    = dirname($this->file());
         $this->twig = new Environment($viewPath);
         $this->kirby = $kirby;
     }
-    
+
     public function extension(): string
     {
         return 'twig';
@@ -51,8 +51,30 @@ class Template extends \Kirby\Cms\Template
     {
         $usephp = option('mgfagency.twig.usephp', true);
         $type = $this->type();
-        $name = $type !== null && $type !== 'html' ? $this->name() . '.' . $type : $this->name();
 
+        if ($this->hasDefaultType() === true) {
+
+            $base = $this->root() . '/' . $this->name();
+            $twig = $base . '.twig';
+            $php  = $base . '.php';
+
+            if ($usephp and !is_file($twig) and is_file($php)) {
+                return F::realpath($php, $this->root());
+            } else {
+                try {
+                    return F::realpath($twig, $this->root());
+                } catch (Exception $e) {
+                    $path = App::instance()->extension($this->store(), $this->name());
+
+                    if ($path !== null) {
+                        return $path;
+                    }
+                }
+            }
+
+        }
+
+        $name = $this->name() . '.' . $type;
         $base = $this->root() . '/' . $name;
         $twig = $base . '.twig';
         $php  = $base . '.php';
@@ -64,7 +86,9 @@ class Template extends \Kirby\Cms\Template
             try {
                 return F::realpath($twig, $this->root());
             } catch (Exception $e) {
-                return App::instance()->extension('templates', $name);
+                // Look for the template with type extension provided by an extension.
+                // This might be null if the template does not exist.
+                return App::instance()->extension($this->store(), $name);
             }
         }
     }

@@ -10,8 +10,8 @@ Kirby::plugin('mgfagency/twig', [
         'usephp' => true
     ],
     'components' => [
-        'template' => function (App $kirby, string $name, string $type = 'html') {
-            return new mgfagency\Twig\Template($kirby, $name, $type);
+        'template' => function (App $kirby, string $name, string $contentType = 'html', string $defaultType = 'html') {
+            return new mgfagency\Twig\Template($kirby, $name, $contentType, $defaultType);
         }
     ]
 ]);
