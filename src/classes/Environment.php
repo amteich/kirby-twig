@@ -100,7 +100,7 @@ class Environment
      * Prepare the Twig environment
      * @throws Twig_Error_Loader
      */
-    public function __construct($viewPath)
+    public function __construct(string $viewPath = '')
     {
         $kirby = Kirby::instance();
         $this->debug = option('debug');

@@ -33,7 +33,9 @@ class Plugin
     {
         if (!is_string($template)) return '';
         $path = strlen($template) <= 256 ? trim($template) : '';
-        $data = array_merge(Template::$data, is_array($userData) ? $userData : []);
+        $data = array_merge(is_array($userData) ? $userData : [], ['kirby' => kirby()]);
+        $data = array_merge($data, Template::$data);
+
         $twig = Environment::instance();
 
         // treat template as a path only if it *looks like* a Twig template path
