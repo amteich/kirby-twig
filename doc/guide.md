@@ -131,7 +131,7 @@ For instance we could work with the `site` object to retrieve all child pages of
 
 {% set posts = site
   .find('blog')
-  .children
+  .children()
   .filterBy('status', 'published')
   .sortBy('date', 'desc') %}
 
@@ -157,7 +157,7 @@ You will need to do a little bit of translation between the PHP syntax in Kirbyâ
 â€¦ translates to the following Twig code:
 
 ```twig
-{{ page.children.first.title }}
+{{ page.children().first.title }}
 ```
 
 ### Helper functions
@@ -177,4 +177,4 @@ Functions or classes defined by Kirby plugins will not be picked up in Twig temp
 
 ## Using controllers
 
-You can send more data to templates by [writing a Controller](https://getkirby.com/docs/guide/templates/controllers). 
+You can send more data to templates by [writing a Controller](https://getkirby.com/docs/guide/templates/controllers).

@@ -26,7 +26,7 @@ After:
 {# site/templates/hello.twig #}
 <h1>{{ page.title }}</h1>
 <ul>
-{% for child in page.children %}
+{% for child in page.children() %}
   <li><a href="{{ child.url }}">{{ child.title }}</li>
 {% endfor %}
 </ul>
@@ -70,6 +70,12 @@ Now that the plugin is installed and active, you can write Twig templates in the
 ```
 
 See the `{% extends '@templates/layout.twig' %}` and `{% block content %}` parts? They’re a powerful way to manage having a common page layout for many templates, and only changing the core content (and/or other specific parts). Read [our Twig templating guide](doc/guide.md) for more information.
+
+### Hint: Accessing pagemethods instead of public variables
+
+Twig calls to specific methods, like for instance `page.children` sometimes return `NULL`. This can occur, if there is also a public variable which is only initialized after calling the corresponding method.
+
+`{{ page.children }}` returns `NULL`, because the public variable is returned. Please call the method instead like this: `{{ page.children() }}`.
 
 ## Options
 

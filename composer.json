@@ -16,7 +16,7 @@
     ],
     "require": {
         "getkirby/composer-installer": "^1.1",
-        "twig/twig": "^2.0"
+        "twig/twig": "2.11.*"
     },
     "autoload": {
         "psr-4": {
