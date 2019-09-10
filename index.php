@@ -11,7 +11,7 @@ Kirby::plugin('mgfagency/twig', [
     ],
     'components' => [
         'template' => function (App $kirby, string $name, string $contentType = 'html', string $defaultType = 'html') {
-            return new mgfagency\Twig\Template($kirby, $name, $contentType, $defaultType);
+            return new mgfagency\Twig\Template($name, $contentType, $defaultType);
         }
     ]
 ]);

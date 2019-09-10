@@ -19,8 +19,7 @@ use Kirby\Toolkit\F;
  */
 class Template extends \Kirby\Cms\Template
 {
-    protected $twig;
-    protected $kirby;
+    private static $twig;
 
     /**
      * Creates a new template object
@@ -29,12 +28,11 @@ class Template extends \Kirby\Cms\Template
      * @param string $type
      * @param string $defaultType
      */
-    public function __construct(App $kirby, string $name, string $contentType = 'html', string $defaultType = 'html')
+    public function __construct(string $name, string $contentType = 'html', string $defaultType = 'html')
     {
         parent::__construct($name, $contentType, $defaultType);
         $viewPath    = dirname($this->file());
-        $this->twig = new Environment($viewPath);
-        $this->kirby = $kirby;
+        static::$twig = new Environment($viewPath);
     }
 
     /**
@@ -112,7 +110,7 @@ class Template extends \Kirby\Cms\Template
     public function render(array $data = []): string
     {
         if ($this->isTwig()) {
-            return $this->twig->renderPath($this->name() . '.' . $this->extension(), $data, true);
+            return static::$twig->renderPath($this->name() . '.' . $this->extension(), $data, true);
         }
         return parent::render($data);
     }
