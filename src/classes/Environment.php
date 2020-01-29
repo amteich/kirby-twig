@@ -298,7 +298,7 @@ class Environment
 
         // Gather information
         $sourceContext = $err->getSourceContext();
-        $name = $sourceContext->getName();
+        $name = $sourceContext != null ? $sourceContext->getName() : '';
         $line = $err->getTemplateLine();
         $msg  = $err->getRawMessage();
         $path = null;
