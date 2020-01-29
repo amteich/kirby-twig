@@ -171,9 +171,13 @@ class Environment
         foreach ($kirby->plugins() as $id => $plugin) {
             if (isset($plugin->extends()['twigcomponents']))
             {
-                $loader->addPath($plugin->extends()['twigcomponents']);
-            }
-        }
+                  $twigcomponents = $plugin->extends()['twigcomponents'];
+                  if (is_callable($twigcomponents)) {
+                    $twigcomponents = $twigcomponents();
+                  }
+                  $loader->addPath($twigcomponents);
+              }
+          }
 
         // Start up Twig
         $this->twig = new Twig_Environment($loader, $options['core']);
