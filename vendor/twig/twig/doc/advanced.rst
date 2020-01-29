@@ -571,11 +571,6 @@ to host all the specific tags and filters you want to add to Twig.
     recompile your templates whenever you make a change to it (when
     ``auto_reload`` is enabled).
 
-.. note::
-
-    Before writing your own extensions, have a look at the Twig official
-    extension repository: https://github.com/twigphp/Twig-extensions.
-
 An extension is a class that implements the following interface::
 
     interface \Twig\Extension\ExtensionInterface
@@ -806,10 +801,10 @@ This is very convenient but not recommended as it makes template compilation
 depend on runtime dependencies even if they are not needed (think for instance
 as a dependency that connects to a database engine).
 
-You can easily decouple the extension definitions from their runtime
-implementations by registering a ``\Twig\RuntimeLoader\RuntimeLoaderInterface`` instance on
-the environment that knows how to instantiate such runtime classes (runtime
-classes must be autoload-able)::
+You can decouple the extension definitions from their runtime implementations by
+registering a ``\Twig\RuntimeLoader\RuntimeLoaderInterface`` instance on the
+environment that knows how to instantiate such runtime classes (runtime classes
+must be autoload-able)::
 
     class RuntimeLoader implements \Twig\RuntimeLoader\RuntimeLoaderInterface
     {
@@ -863,49 +858,6 @@ It is now possible to move the runtime logic to a new
         }
     }
 
-Overloading
------------
-
-To overload an already defined filter, test, operator, global variable, or
-function, re-define it in an extension and register it **as late as
-possible** (order matters)::
-
-    class MyCoreExtension extends \Twig\Extension\AbstractExtension
-    {
-        public function getFilters()
-        {
-            return [
-                new \Twig\TwigFilter('date', [$this, 'dateFilter']),
-            ];
-        }
-
-        public function dateFilter($timestamp, $format = 'F j, Y H:i')
-        {
-            // do something different from the built-in date filter
-        }
-    }
-
-    $twig = new \Twig\Environment($loader);
-    $twig->addExtension(new MyCoreExtension());
-
-Here, we have overloaded the built-in ``date`` filter with a custom one.
-
-If you do the same on the ``\Twig\Environment`` itself, beware that it takes
-precedence over any other registered extensions::
-
-    $twig = new \Twig\Environment($loader);
-    $twig->addFilter(new \Twig\TwigFilter('date', function ($timestamp, $format = 'F j, Y H:i') {
-        // do something different from the built-in date filter
-    }));
-    // the date filter will come from the above registration, not
-    // from the registered extension below
-    $twig->addExtension(new MyCoreExtension());
-
-.. caution::
-
-    Note that overloading the built-in Twig elements is not recommended as it
-    might be confusing.
-
 Testing an Extension
 --------------------
 
@@ -941,7 +893,7 @@ The ``IntegrationTest.php`` file should look like this::
 
         public function getFixturesDir()
         {
-            return dirname(__FILE__).'/Fixtures/';
+            return __DIR__.'/Fixtures/';
         }
     }
 
@@ -956,5 +908,5 @@ Testing the node visitors can be complex, so extend your test cases from
 `tests/Twig/Node`_ directory.
 
 .. _`rot13`:               https://secure.php.net/manual/en/function.str-rot13.php
-.. _`tests/Twig/Fixtures`: https://github.com/twigphp/Twig/tree/2.x/test/Twig/Tests/Fixtures
-.. _`tests/Twig/Node`:     https://github.com/twigphp/Twig/tree/2.x/test/Twig/Tests/Node
+.. _`tests/Twig/Fixtures`: https://github.com/twigphp/Twig/tree/2.x/tests/Fixtures
+.. _`tests/Twig/Node`:     https://github.com/twigphp/Twig/tree/2.x/tests/Node

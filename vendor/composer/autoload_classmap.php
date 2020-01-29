@@ -90,6 +90,7 @@ return array(
     'Twig\\Node\\Expression\\Binary\\OrBinary' => $vendorDir . '/twig/twig/src/Node/Expression/Binary/OrBinary.php',
     'Twig\\Node\\Expression\\Binary\\PowerBinary' => $vendorDir . '/twig/twig/src/Node/Expression/Binary/PowerBinary.php',
     'Twig\\Node\\Expression\\Binary\\RangeBinary' => $vendorDir . '/twig/twig/src/Node/Expression/Binary/RangeBinary.php',
+    'Twig\\Node\\Expression\\Binary\\SpaceshipBinary' => $vendorDir . '/twig/twig/src/Node/Expression/Binary/SpaceshipBinary.php',
     'Twig\\Node\\Expression\\Binary\\StartsWithBinary' => $vendorDir . '/twig/twig/src/Node/Expression/Binary/StartsWithBinary.php',
     'Twig\\Node\\Expression\\Binary\\SubBinary' => $vendorDir . '/twig/twig/src/Node/Expression/Binary/SubBinary.php',
     'Twig\\Node\\Expression\\BlockReferenceExpression' => $vendorDir . '/twig/twig/src/Node/Expression/BlockReferenceExpression.php',

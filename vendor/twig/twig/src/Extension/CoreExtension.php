@@ -34,6 +34,7 @@ use Twig\Node\Expression\Binary\NotInBinary;
 use Twig\Node\Expression\Binary\OrBinary;
 use Twig\Node\Expression\Binary\PowerBinary;
 use Twig\Node\Expression\Binary\RangeBinary;
+use Twig\Node\Expression\Binary\SpaceshipBinary;
 use Twig\Node\Expression\Binary\StartsWithBinary;
 use Twig\Node\Expression\Binary\SubBinary;
 use Twig\Node\Expression\Filter\DefaultFilter;
@@ -309,6 +310,7 @@ final class CoreExtension extends AbstractExtension
                 'b-and' => ['precedence' => 18, 'class' => BitwiseAndBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
                 '==' => ['precedence' => 20, 'class' => EqualBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
                 '!=' => ['precedence' => 20, 'class' => NotEqualBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
+                '<=>' => ['precedence' => 20, 'class' => SpaceshipBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
                 '<' => ['precedence' => 20, 'class' => LessBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
                 '>' => ['precedence' => 20, 'class' => GreaterBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
                 '>=' => ['precedence' => 20, 'class' => GreaterEqualBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
@@ -488,7 +490,7 @@ function twig_date_modify_filter(Environment $env, $date, $modifier)
  * @param \DateTimeInterface|string|null  $date     A date or null to use the current time
  * @param \DateTimeZone|string|false|null $timezone The target timezone, null to use the default, false to leave unchanged
  *
- * @return \DateTime
+ * @return \DateTimeInterface
  */
 function twig_date_converter(Environment $env, $date = null, $timezone = null)
 {
@@ -778,7 +780,7 @@ function twig_join_filter($value, $glue = '', $and = null)
  */
 function twig_split_filter(Environment $env, $value, $delimiter, $limit = null)
 {
-    if (!empty($delimiter)) {
+    if (\strlen($delimiter) > 0) {
         return null === $limit ? explode($delimiter, $value) : explode($delimiter, $value, $limit);
     }
 
@@ -904,7 +906,7 @@ function twig_reverse_filter(Environment $env, $item, $preserveKeys = false)
  *
  * @return array
  */
-function twig_sort_filter($array)
+function twig_sort_filter($array, $arrow = null)
 {
     if ($array instanceof \Traversable) {
         $array = iterator_to_array($array);
@@ -912,7 +914,11 @@ function twig_sort_filter($array)
         throw new RuntimeError(sprintf('The sort filter only works with arrays or "Traversable", got "%s".', \gettype($array)));
     }
 
-    asort($array);
+    if (null !== $arrow) {
+        uasort($array, $arrow);
+    } else {
+        asort($array);
+    }
 
     return $array;
 }
@@ -924,6 +930,9 @@ function twig_in_filter($value, $compare)
 {
     if ($value instanceof Markup) {
         $value = (string) $value;
+    }
+    if ($compare instanceof Markup) {
+        $compare = (string) $compare;
     }
 
     if (\is_array($compare)) {
@@ -1080,13 +1089,20 @@ function twig_capitalize_string_filter(Environment $env, $string)
 /**
  * @internal
  */
-function twig_call_macro($object, string $method, array $args, int $lineno, Source $source)
+function twig_call_macro(Template $template, string $method, array $args, int $lineno, array $context, Source $source)
 {
-    if (!method_exists($object, $method)) {
-        throw new RuntimeError(sprintf('Macro "%s" is not defined in template "%s".', substr($method, \strlen('macro_')), $object->getTemplateName()), $lineno, $source);
+    if (!method_exists($template, $method)) {
+        $parent = $template;
+        while ($parent = $parent->getParent($context)) {
+            if (method_exists($parent, $method)) {
+                return $parent->$method(...$args);
+            }
+        }
+
+        throw new RuntimeError(sprintf('Macro "%s" is not defined in template "%s".', substr($method, \strlen('macro_')), $template->getTemplateName()), $lineno, $source);
     }
 
-    return $object->$method(...$args);
+    return $template->$method(...$args);
 }
 
 /**
@@ -1133,6 +1149,10 @@ function twig_test_empty($value)
 {
     if ($value instanceof \Countable) {
         return 0 == \count($value);
+    }
+
+    if ($value instanceof \Traversable) {
+        return !iterator_count($value);
     }
 
     if (\is_object($value) && method_exists($value, '__toString')) {
@@ -1312,7 +1332,7 @@ function twig_get_attribute(Environment $env, Source $source, $object, $item, ar
     if (/* Template::METHOD_CALL */ 'method' !== $type) {
         $arrayItem = \is_bool($item) || \is_float($item) ? (int) $item : $item;
 
-        if (((\is_array($object) || $object instanceof \ArrayObject) && (isset($object[$arrayItem]) || \array_key_exists($arrayItem, $object)))
+        if (((\is_array($object) || $object instanceof \ArrayObject) && (isset($object[$arrayItem]) || \array_key_exists($arrayItem, (array) $object)))
             || ($object instanceof ArrayAccess && isset($object[$arrayItem]))
         ) {
             if ($isDefinedTest) {
@@ -1383,7 +1403,7 @@ function twig_get_attribute(Environment $env, Source $source, $object, $item, ar
 
     // object property
     if (/* Template::METHOD_CALL */ 'method' !== $type) {
-        if (isset($object->$item) || \array_key_exists((string) $item, $object)) {
+        if (isset($object->$item) || \array_key_exists((string) $item, (array) $object)) {
             if ($isDefinedTest) {
                 return true;
             }
@@ -1496,10 +1516,11 @@ function twig_get_attribute(Environment $env, Source $source, $object, $item, ar
  *
  * @param array|Traversable $array An array
  * @param mixed             $name  The column name
+ * @param mixed             $index The column to use as the index/keys for the returned array
  *
  * @return array The array of values
  */
-function twig_array_column($array, $name): array
+function twig_array_column($array, $name, $index = null): array
 {
     if ($array instanceof Traversable) {
         $array = iterator_to_array($array);
@@ -1507,16 +1528,17 @@ function twig_array_column($array, $name): array
         throw new RuntimeError(sprintf('The column filter only works with arrays or "Traversable", got "%s" as first argument.', \gettype($array)));
     }
 
-    return array_column($array, $name);
+    return array_column($array, $name, $index);
 }
 
 function twig_array_filter($array, $arrow)
 {
-    foreach ($array as $k => $v) {
-        if ($arrow($v, $k)) {
-            yield $k => $v;
-        }
+    if (\is_array($array)) {
+        return array_filter($array, $arrow, \ARRAY_FILTER_USE_BOTH);
     }
+
+    // the IteratorIterator wrapping is needed as some internal PHP classes are \Traversable but do not implement \Iterator
+    return new \CallbackFilterIterator(new \IteratorIterator($array), $arrow);
 }
 
 function twig_array_map($array, $arrow)
