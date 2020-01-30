@@ -77,6 +77,7 @@ class Environment
         'pages',
         'param',
         'params',
+        '*pattern',
         // Skipping: r - Same reason as for ecco/e
         'timestamp',
         'site',
