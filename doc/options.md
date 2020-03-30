@@ -7,6 +7,9 @@
 //   {% include '@mynamespace/something.twig' %}
 'mgfagency.twig.namespace.mynamespace' => kirby()->roots()->index() . '/mydirectory'
 
+// Load an extension
+'mgfagency.twig.extension.intl' => 'Twig\\Extra\\Intl\\IntlExtension',
+
 // Expose an existing function in templates
 'mgfagency.twig.function.myfunction' => 'myCustomFunction'
 
@@ -20,15 +23,15 @@
 			default:
 				return false;
 				break;
-		
+
 			case 'array':
 				return is_array($var);
 				break;
-				
+
 			case 'bool':
 				return is_bool($var);
 				break;
-				
+
 			case 'string':
 				return is_string($var);
 				break;

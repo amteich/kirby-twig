@@ -125,6 +125,7 @@ class Environment
                 $this->defaultFunctions,
                 option('mgfagency.twig.env.functions', [])
             )),
+            'extension' => $this->cleanNames(option('mgfagency.twig.env.extensions', [])),
             'filter' => $this->cleanNames(option('mgfagency.twig.env.filters', [])),
             'test' => $this->cleanNames(option('mgfagency.twig.env.tests', [])),
         ];
@@ -187,6 +188,9 @@ class Environment
         $this->twig->addExtension(new Twig_Extension_Debug());
 
         // Plug in functions and filters
+        foreach ($options['extension'] as $className) {
+            $this->twig->addExtension(new $className());
+        }
         foreach ($options['function'] as $name => $func) {
             $this->addCallable('function', $name, $func);
         }
