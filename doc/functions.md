@@ -2,8 +2,17 @@
 
 If you need to expose PHP functions (or static class methods) to your Twig templates, you can list them with those options:
 
-- `mgfagency.twig.function.[…]`
-- `mgfagency.twig.filter.[…]`
+```php
+
+return [
+  'mgfagency.twig.env.functions' => [
+  ],
+  'mgfagency.twig.env.filters' => [
+  ],
+  'mgfagency.twig.env.tests' => [
+  ],
+];
+```
 
 As with any option in Kirby, you should define these options in your `site/config/config.php`. Let’s show how each option works.
 
@@ -12,7 +21,9 @@ As with any option in Kirby, you should define these options in your `site/confi
 The expected syntax for these configuration options is:
 
 ```php
-'mgfagency.twig.function.myFunctionName' => $someFunction
+'mgfagency.twig.env.functions' => [
+  'myFunctionName' => $someFunction
+],
 ```
 
 Where:
@@ -41,7 +52,9 @@ function sayHello($who='') {
 You can make it available as a Twig function:
 
 ```php
-'mgfagency.twig.function.sayHello' => 'sayHello'
+'mgfagency.twig.env.functions' => [
+  'sayHello' => 'sayHello'
+],
 ```
 
 ```twig
@@ -52,7 +65,9 @@ You can make it available as a Twig function:
 Or you could expose it as a Twig filter:
 
 ```php
-'mgfagency.twig.filter.sayHello' => 'sayHello'
+'mgfagency.twig.env.filters' => [
+  'sayHello' => 'sayHello'
+],
 ```
 
 ```twig
@@ -64,12 +79,14 @@ I recommend sticking to the Twig function syntax, and only using Twig’s built-
 
 ### Using an anonymous function
 
-The `twig.function.[…]` and `twig.filter.[…]` configs accept anonymous functions (called closures in PHP):
+Also anonymous functions (called closures in PHP) are accepted:
 
 ```php
-'mgfagency.twig.function.sayHello' => function($who='') {
+'mgfagency.twig.env.functions' => [
+  'sayHello' => function($who='') {
     return 'Hello' . (is_string($who) ? ' ' . $who : '');
-}
+  }
+],
 ```
 
 ### Exposing static methods
@@ -77,8 +94,10 @@ The `twig.function.[…]` and `twig.filter.[…]` configs accept anonymous funct
 You can also expose static methods, using the string syntax:
 
 ```php
-'mgfagency.twig.function.setCookie' => 'Cookie::set'
-'mgfagency.twig.function.getCookie' => 'Cookie::get'
+'mgfagency.twig.env.functions' => [
+  'setCookie' => 'Cookie::set',
+  'getCookie' => 'Cookie::get',
+],
 ```
 
 ```twig
@@ -99,7 +118,9 @@ By default, Twig escapes strings returned by functions, to avoid security attack
 Alternatively, when declaring a Twig function you can mark it as safe for HTML output by adding a `*` before its name, like this:
 
 ```php
-'mgfagency.twig.function.*sayHello' => 'sayHello'
+'mgfagency.twig.env.functions' => [
+  '*sayHello' => 'sayHello'
+],
 ```
 
 
@@ -120,9 +141,11 @@ class VeryCoolThing
 }
 
 // site/config/config.php
-'mgfagency.twig.function.getCoolStuff' => function(){
-  return new VeryCoolThing();
-})
+'mgfagency.twig.env.functions' => [
+  'getCoolStuff' => function(){
+    return new VeryCoolThing();
+  }
+],
 ```
 
 Then in your templates, you can use that function to get a class instance:
@@ -141,17 +164,19 @@ Alternatively, you could define and expose a generic function that allows instan
 /**
  * Make a class instance for the provided class name and parameters.
  */
-'mgfagency.twig.function.new' => function($name) {
-  if (!class_exists($name)) {
-    throw new Twig_Error_Runtime("Unknown class \"$name\"");
+'mgfagency.twig.env.functions' => [
+  'new' => function($name) {
+    if (!class_exists($name)) {
+      throw new Twig_Error_Runtime("Unknown class \"$name\"");
+    }
+    $args = array_slice(func_get_args(), 1);
+    if (count($args) > 0) {
+      $reflected = new ReflectionClass($name);
+      return $reflected->newInstanceArgs($args);
+    }
+    return new $name;
   }
-  $args = array_slice(func_get_args(), 1);
-  if (count($args) > 0) {
-    $reflected = new ReflectionClass($name);
-    return $reflected->newInstanceArgs($args);
-  }
-  return new $name;
-})
+],
 ```
 
 Then in Twig templates:

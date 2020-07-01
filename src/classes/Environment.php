@@ -48,51 +48,66 @@ class Environment
      * @var array
      */
     private $defaultFunctions = [
-        '*attr',
-        'asset',
-        'collection',
-        '*csrf',
-        '*csrf_field',
-        '*honeypot_field',
-        '*css',
-        // Skipping: e - Twig syntax is simple: {{ condition ? 'a' : 'b' }}
-        '*esc',
-        'get',
-        '*gist',
-        'go',
-        'gravatar',
-        '*h', '*html',
-        '*image',
-        'invalid',
-        '*js',
-        'kirby',
-        '*kirbytag',
-        '*kirbytags',
-        '*kirbytext',
-        '*markdown',
-        'option',   // Get config value
-        'memory',
-        '*multiline',
-        'page',
-        'pages',
-        'param',
-        'params',
-        '*pattern',
-        // Skipping: r - Same reason as for ecco/e
-        'timestamp',
-        'site',
-        'size',
-        '*smartypants',
-        '*snippet',
-        '*svg',
-        't',
-        'tc',
-        '*twitter',
-        'u', 'url',
-        '*video',
-        '*vimeo',
-        '*widont',
-        '*youtube',
+      '*attr' => 'attr',
+      'asset' => 'asset',
+      'collection' => 'collection',
+      '*csrf' => 'csrf',
+      '*csrf_field' => 'csrf_field',
+      '*honeypot_field' => 'honeypot_field',
+      '*css' => 'css',
+      // Skipping: e - Twig syntax is simple: {{ condition ? 'a' : 'b' }}
+      '*esc' => 'esc',
+      'error' => 'mgfagency\Twig\Functions::error',
+      'get' => 'get',
+      '*gist' => 'gist',
+      'go' => 'go',
+      'gravatar' => 'gravatar',
+      '*h' => 'h',
+      '*html' => 'html',
+      '*image' => 'image',
+      'invalid' => 'invalid',
+      '*js' => 'js',
+      'kirby' => 'kirby',
+      '*kirbytag' => 'kirbytag',
+      '*kirbytags' => 'kirbytags',
+      '*kirbytext' => 'kirbytext',
+      '*markdown' => 'markdown',
+      'option' => 'option',   // Get config value => 'option'
+      'memory' => 'memory',
+      '*multiline' => 'multiline',
+      'page' => 'page',
+      'pages' => 'pages',
+      'param' => 'param',
+      'params' => 'params',
+      '*pattern' => 'pattern',
+      // Skipping: r - Same reason as for ecco/e
+      'timestamp' => 'timestamp',
+      'site' => 'site',
+      'size' => 'size',
+      'slug' => 'Str::slug',
+      '*smartypants' => 'smartypants',
+      '*snippet' => 'snippet',
+      '*strftime' => 'strftime',
+      '*svg' => 'svg',
+      't' => 't',
+      'tc' => 'tc',
+      '*twitter' => 'twitter',
+      'u' => 'u',
+      'url' => 'url',
+      'url_build' => 'Url::build',
+      '*video' => 'video',
+      '*vimeo' => 'vimeo',
+      '*widont' => 'widont',
+      '*youtube' => 'youtube',
+    ];
+
+    /**
+     * Default twig tests.
+     *
+     * @var array
+     */
+    private $defaultTests = [
+      'of_type' => 'mgfagency\Twig\Tests::of_type',
     ];
 
     private $templateDir = null;
@@ -121,27 +136,21 @@ class Environment
                 'plugins' => kirby()->roots()->plugins(),
             ],
             'paths' => [],
-            'function' => $this->cleanNames(array_merge(
+            'function' => array_merge(
                 $this->defaultFunctions,
                 option('mgfagency.twig.env.functions', [])
-            )),
-            'extension' => $this->cleanNames(option('mgfagency.twig.env.extensions', [])),
-            'filter' => $this->cleanNames(option('mgfagency.twig.env.filters', [])),
-            'test' => $this->cleanNames(option('mgfagency.twig.env.tests', [])),
+            ),
+            'extension' => option('mgfagency.twig.env.extensions', []),
+            'filter' => option('mgfagency.twig.env.filters', []),
+            'test' => array_merge(
+              $this->defaultTests,
+              option('mgfagency.twig.env.tests', [])
+          ),
         ];
 
         // Set cache directory
         if (option('mgfagency.twig.cache')) {
             $options['core']['cache'] = kirby()->roots()->cache() . '/twig';
-        }
-
-        // Look at 'twig.abc.xYz' options to find namespaces, functions & filters
-        foreach (array_keys(App::instance()->options()) as $key) {
-            $p = '/^mgfagency.twig\.(env\.)?([a-z]+)\.(\*?[a-zA-Z][a-zA-Z0-9_\-]*)$/';
-            $m = [];
-            if (preg_match($p, $key, $m) === 1 && array_key_exists($m[2], $options)) {
-                $options[ $m[2] ][ $m[3] ] = option($key);
-            }
         }
 
         // Set up the template loader
@@ -371,23 +380,6 @@ class Environment
             }
         }
         return implode("\n", $excerpt);
-    }
-
-    /**
-     * Clean up function names for use in Twig templates
-     * Returns ['twig name' => 'callable name']
-     * @param  array $source
-     * @return array
-     */
-    private function cleanNames($source)
-    {
-        $names = [];
-        foreach ($source as $name) {
-            if (!is_string($name)) continue;
-            $key = str_replace('::', '__', $name);
-            $names[$key] = trim($name, '*');
-        }
-        return $names;
     }
 
     /**

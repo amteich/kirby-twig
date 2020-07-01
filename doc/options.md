@@ -11,32 +11,38 @@
 'mgfagency.twig.extension.intl' => 'Twig\\Extra\\Intl\\IntlExtension',
 
 // Expose an existing function in templates
-'mgfagency.twig.function.myfunction' => 'myCustomFunction'
+'mgfagency.twig.env.functions' => [
+  'myfunction' => 'myCustomFunction'
+],
 
 // Expose an existing function in templates as a filter
-'mgfagency.twig.filter.myfilter' => 'myCustomFilter'
+'mgfagency.twig.env.filters' => [
+  'myfilter' => 'myCustomFilter'
+],
 
 // Expose a twig test function for templates
-'mgfagency.twig.test.of_type' => function ($var, $typeTest) {
-    switch ($typeTest)
-		{
-			default:
-				return false;
-				break;
+'mgfagency.twig.env.tests' => [
+  'of_type' => function ($var, $typeTest) {
+      switch ($typeTest)
+      {
+        default:
+          return false;
+          break;
 
-			case 'array':
-				return is_array($var);
-				break;
+        case 'array':
+          return is_array($var);
+          break;
 
-			case 'bool':
-				return is_bool($var);
-				break;
+        case 'bool':
+          return is_bool($var);
+          break;
 
-			case 'string':
-				return is_string($var);
-				break;
-		}
-},
+        case 'string':
+          return is_string($var);
+          break;
+      }
+  },
+],
 ```
 
 See [Using your own functions in templates](functions.md) for details about Twig functions and filters.

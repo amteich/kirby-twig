@@ -2,7 +2,7 @@
     "name": "mgfagency/kirby-twig",
     "description": "Twig templating support for Kirby CMS",
     "type": "kirby-plugin",
-    "version": "1.3.0",
+    "version": "2.0.0",
     "license": "MIT",
     "authors": [
         {
