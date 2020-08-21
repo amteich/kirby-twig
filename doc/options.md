@@ -5,7 +5,9 @@
 ```php
 // Define a directory as a Twig namespace, that can be used as:
 //   {% include '@mynamespace/something.twig' %}
-'mgfagency.twig.namespace.mynamespace' => kirby()->roots()->index() . '/mydirectory'
+'mgfagency.twig.namespaces' => [
+  'mynamespace' => kirby()->roots()->index() . '/mydirectory',
+],
 
 // Load an extension
 'mgfagency.twig.extension.intl' => 'Twig\\Extra\\Intl\\IntlExtension',

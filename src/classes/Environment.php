@@ -102,7 +102,7 @@ class Environment
     ];
 
     /**
-     * Default twig tests.
+     * Default twig tests
      *
      * @var array
      */
@@ -165,6 +165,11 @@ class Environment
         if ($viewPath != $this->templateDir) {
             $loader->addPath($viewPath);
         }
+
+        $options['namespace'] = array_merge(
+            $options['namespace'],
+            option('mgfagency.twig.namespaces', [])
+        );
 
         $canSkip = ['snippets', 'plugins', 'assets'];
         foreach ($options['namespace'] as $key=>$path) {
