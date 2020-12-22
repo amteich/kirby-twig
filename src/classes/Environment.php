@@ -8,13 +8,13 @@ use Kirby\Cms\App;
 use Kirby\Toolkit\Html;
 use Kirby\Toolkit\Tpl;
 
-use Twig_Environment;
-use Twig_SimpleFunction;
-use Twig_SimpleFilter;
-use Twig_SimpleTest;
-use Twig_Extension_Debug;
-use Twig_Error;
-use Twig_Loader_Filesystem;
+use \Twig\Environment as Twig_Environment;
+use \Twig\TwigFunction as Twig_Function;
+use \Twig\TwigFilter as Twig_Filter;
+use \Twig\TwigTest as Twig_Test;
+use \Twig\Extension\DebugExtension as Twig_Extension_Debug;
+use \Twig\Error\Error as Twig_Error;
+use \Twig\Loader\FilesystemLoader as Twig_Loader_Filesystem;
 
 
 /**
@@ -404,13 +404,13 @@ class Environment
             $params['is_safe'] = ['html'];
         }
         if ($type === 'function') {
-            $this->twig->addFunction(new Twig_SimpleFunction($twname, $func, $params));
+            $this->twig->addFunction(new Twig_Function($twname, $func, $params));
         }
         if ($type === 'filter') {
-            $this->twig->addFilter(new Twig_SimpleFilter($twname, $func, $params));
+            $this->twig->addFilter(new Twig_Filter($twname, $func, $params));
         }
         if ($type === 'test') {
-            $this->twig->addTest(new Twig_SimpleTest($twname, $func));
+            $this->twig->addTest(new Twig_Test($twname, $func));
         }
     }
 }

@@ -1,9 +1,6 @@
 ``format_datetime``
 ===================
 
-.. versionadded:: 2.12
-    The ``format_datetime`` filter was added in Twig 2.12.
-
 The ``format_datetime`` filter formats a date time:
 
     public function formatDateTime(Environment $env, $date, ?string $dateFormat = 'medium', ?string $timeFormat = 'medium', string $pattern = '', $timezone = null, string $calendar = 'gregorian', string $locale = null): string
@@ -28,7 +25,10 @@ You can tweak the output for the date part and the time part:
 
 Supported values are: ``none``, ``short``, ``medium``, ``long``, and ``full``.
 
-For greater flexiblity, you can even define your own pattern:
+For greater flexiblity, you can even define your own pattern (see the `ICU user
+guide
+<https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax>`_
+for supported patterns).
 
 .. code-block:: twig
 
@@ -52,7 +52,7 @@ By default, the filter uses the current locale. You can pass it explicitly:
         $ composer req twig/intl-extra
 
     Then, use the ``twig/extra-bundle`` on Symfony projects or add the extension
-    explictly on the Twig environment::
+    explicitly on the Twig environment::
 
         use Twig\Extra\Intl\IntlExtension;
 

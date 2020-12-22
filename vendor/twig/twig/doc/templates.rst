@@ -177,11 +177,6 @@ To apply a filter on a section of code, wrap it with the
 Go to the :doc:`filters<filters/index>` page to learn more about built-in
 filters.
 
-.. note::
-
-    The ``apply`` tag was introduced in Twig 2.9; use the ``filter`` tag with
-    previous versions.
-
 Functions
 ---------
 
@@ -560,6 +555,11 @@ exist:
     {# keys as integer #}
     { 2: 'foo', 4: 'bar' }
 
+    {# keys can be omitted if it is the same as the variable name #}
+    { foo }
+    {# is equivalent to the following #}
+    { 'foo': foo }
+
     {# keys as expressions (the expression must be enclosed into parentheses) #}
     {% set foo = 'foo' %}
     { (foo): 'foo', (1 + 1): 'bar', (foo ~ 'b'): 'baz' }
@@ -781,9 +781,6 @@ inserted into the string:
 Whitespace Control
 ------------------
 
-.. versionadded:: 2.8
-    Tag level Line whitespace control was added in Twig 2.8.
-
 The first newline after a template tag is removed automatically (like in PHP).
 Whitespace is not further modified by the template engine, so each whitespace
 (spaces, tabs, newlines etc.) is returned unchanged.
@@ -839,9 +836,6 @@ the modifiers on one side of a tag or on both sides:
         {% endapply %}
 
         {# output will be <div><strong>foo bar</strong></div> #}
-
-    The ``apply`` tag was introduced in Twig 2.9; use the ``filter`` tag with
-    previous versions.
 
 Extensions
 ----------
