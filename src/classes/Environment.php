@@ -393,7 +393,7 @@ class Environment
      * @param string $name
      * @param string|Closure $func
      */
-    private function addCallable($type='function', $name, $func)
+    private function addCallable($type, $name, $func)
     {
         if (!is_string($name) || !is_callable($func)) {
             return;
