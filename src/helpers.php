@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Shortcut for mgfagency\Twig\Plugin::render
+ * Shortcut for amteich\Twig\Plugin::render
  *
  * @package  Kirby Twig Plugin
  * @author   Florens Verschelde <florens@fvsch.com>
@@ -11,5 +11,5 @@
  */
 function twig($template='', $userData=[])
 {
-    return mgfagency\Twig\Plugin::render($template, $userData);
+    return amteich\Twig\Plugin::render($template, $userData);
 }

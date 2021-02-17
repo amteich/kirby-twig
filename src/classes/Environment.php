@@ -1,6 +1,6 @@
 <?php
 
-namespace mgfagency\Twig;
+namespace amteich\Twig;
 
 use Kirby;
 use Response;
@@ -57,7 +57,7 @@ class Environment
       '*css' => 'css',
       // Skipping: e - Twig syntax is simple: {{ condition ? 'a' : 'b' }}
       '*esc' => 'esc',
-      'error' => 'mgfagency\Twig\Functions::error',
+      'error' => 'amteich\Twig\Functions::error',
       'get' => 'get',
       '*gist' => 'gist',
       'go' => 'go',
@@ -107,7 +107,7 @@ class Environment
      * @var array
      */
     private $defaultTests = [
-      'of_type' => 'mgfagency\Twig\Tests::of_type',
+      'of_type' => 'amteich\Twig\Tests::of_type',
     ];
 
     private $templateDir = null;
@@ -126,8 +126,8 @@ class Environment
         $options = [
             'core' => [
                 'debug' => $this->debug,
-                'strict_variables' => option('mgfagency.twig.strict', $this->debug),
-                'autoescape' => option('mgfagency.twig.autoescape', 'html'),
+                'strict_variables' => option('amteich.twig.strict', $this->debug),
+                'autoescape' => option('amteich.twig.autoescape', 'html'),
                 'cache' => false
             ],
             'namespace' => [
@@ -138,18 +138,18 @@ class Environment
             'paths' => [],
             'function' => array_merge(
                 $this->defaultFunctions,
-                option('mgfagency.twig.env.functions', [])
+                option('amteich.twig.env.functions', [])
             ),
-            'extension' => option('mgfagency.twig.env.extensions', []),
-            'filter' => option('mgfagency.twig.env.filters', []),
+            'extension' => option('amteich.twig.env.extensions', []),
+            'filter' => option('amteich.twig.env.filters', []),
             'test' => array_merge(
               $this->defaultTests,
-              option('mgfagency.twig.env.tests', [])
+              option('amteich.twig.env.tests', [])
           ),
         ];
 
         // Set cache directory
-        if (option('mgfagency.twig.cache')) {
+        if (option('amteich.twig.cache')) {
             $options['core']['cache'] = kirby()->roots()->cache() . '/twig';
         }
 
@@ -168,7 +168,7 @@ class Environment
 
         $options['namespace'] = array_merge(
             $options['namespace'],
-            option('mgfagency.twig.namespaces', [])
+            option('amteich.twig.namespaces', [])
         );
 
         $canSkip = ['snippets', 'plugins', 'assets'];
@@ -178,7 +178,7 @@ class Environment
             $loader->addPath($path, $key);
         }
 
-        $options['paths'] = option('mgfagency.twig.paths', []);
+        $options['paths'] = option('amteich.twig.paths', []);
         foreach ($options['paths'] as $path) {
             $loader->addPath($path);
         }

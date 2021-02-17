@@ -1,13 +1,13 @@
 {
-    "name": "mgfagency/kirby-twig",
+    "name": "amteich/kirby-twig",
     "description": "Twig templating support for Kirby CMS",
     "type": "kirby-plugin",
-    "version": "3.0.2",
+    "version": "4.0.0",
     "license": "MIT",
     "authors": [
         {
             "name": "Christian Zehetner",
-            "email": "christian@mgf.at"
+            "email": "christian@am-teich.com"
         },
         {
             "name": "Florens Verschelde",
@@ -16,11 +16,11 @@
     ],
     "require": {
         "getkirby/composer-installer": "^1.1",
-        "twig/twig": "3.1.*"
+        "twig/twig": "^3.0"
     },
     "autoload": {
         "psr-4": {
-            "mgfagency\\Twig\\": "src/classes/"
+            "amteich\\Twig\\": "src/classes/"
         }
     },
     "config": {

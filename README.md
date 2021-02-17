@@ -42,13 +42,13 @@ Download and copy this repository to `/site/plugins/kirby-twig`.
 ### Git submodule
 
 ```
-git submodule add https://github.com/mgfagency/kirby-twig.git site/plugins/kirby-twig
+git submodule add https://github.com/amteich/kirby-twig.git site/plugins/kirby-twig
 ```
 
 ### Composer
 
 ```
-composer require mgfagency/kirby-twig
+composer require amteich/kirby-twig
 ```
 
 ****
@@ -97,5 +97,6 @@ You can find a full list of options in the [options documentation](doc/options.m
 
 ## Credits
 
+- Maintainer: [Christian Zehetner](https://github.com/seehat)
 - Twig library: Fabien Potencier and contributors / [License](https://github.com/twigphp/Twig/blob/3.x/LICENSE)
 - Twig plugin for Kirby 2: Florens Verschelde

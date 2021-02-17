@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit93fa6447d8e08e0a3f64b90b0cdcdc01
+class ComposerStaticInit0fcad4e01a7109b33a336ffeaadc7293
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -12,9 +12,9 @@ class ComposerStaticInit93fa6447d8e08e0a3f64b90b0cdcdc01
     );
 
     public static $prefixLengthsPsr4 = array (
-        'm' => 
+        'a' => 
         array (
-            'mgfagency\\Twig\\' => 15,
+            'amteich\\Twig\\' => 13,
         ),
         'T' => 
         array (
@@ -32,7 +32,7 @@ class ComposerStaticInit93fa6447d8e08e0a3f64b90b0cdcdc01
     );
 
     public static $prefixDirsPsr4 = array (
-        'mgfagency\\Twig\\' => 
+        'amteich\\Twig\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/classes',
         ),
@@ -235,19 +235,19 @@ class ComposerStaticInit93fa6447d8e08e0a3f64b90b0cdcdc01
         'Twig\\TwigTest' => __DIR__ . '/..' . '/twig/twig/src/TwigTest.php',
         'Twig\\Util\\DeprecationCollector' => __DIR__ . '/..' . '/twig/twig/src/Util/DeprecationCollector.php',
         'Twig\\Util\\TemplateDirIterator' => __DIR__ . '/..' . '/twig/twig/src/Util/TemplateDirIterator.php',
-        'mgfagency\\Twig\\Environment' => __DIR__ . '/../..' . '/src/classes/Environment.php',
-        'mgfagency\\Twig\\Functions' => __DIR__ . '/../..' . '/src/classes/Functions.php',
-        'mgfagency\\Twig\\Plugin' => __DIR__ . '/../..' . '/src/classes/Plugin.php',
-        'mgfagency\\Twig\\Template' => __DIR__ . '/../..' . '/src/classes/Template.php',
-        'mgfagency\\Twig\\Tests' => __DIR__ . '/../..' . '/src/classes/Tests.php',
+        'amteich\\Twig\\Environment' => __DIR__ . '/../..' . '/src/classes/Environment.php',
+        'amteich\\Twig\\Functions' => __DIR__ . '/../..' . '/src/classes/Functions.php',
+        'amteich\\Twig\\Plugin' => __DIR__ . '/../..' . '/src/classes/Plugin.php',
+        'amteich\\Twig\\Template' => __DIR__ . '/../..' . '/src/classes/Template.php',
+        'amteich\\Twig\\Tests' => __DIR__ . '/../..' . '/src/classes/Tests.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit93fa6447d8e08e0a3f64b90b0cdcdc01::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit93fa6447d8e08e0a3f64b90b0cdcdc01::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit93fa6447d8e08e0a3f64b90b0cdcdc01::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0fcad4e01a7109b33a336ffeaadc7293::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0fcad4e01a7109b33a336ffeaadc7293::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit0fcad4e01a7109b33a336ffeaadc7293::$classMap;
 
         }, null, ClassLoader::class);
     }

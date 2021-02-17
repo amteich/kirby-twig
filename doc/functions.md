@@ -5,11 +5,11 @@ If you need to expose PHP functions (or static class methods) to your Twig templ
 ```php
 
 return [
-  'mgfagency.twig.env.functions' => [
+  'amteich.twig.env.functions' => [
   ],
-  'mgfagency.twig.env.filters' => [
+  'amteich.twig.env.filters' => [
   ],
-  'mgfagency.twig.env.tests' => [
+  'amteich.twig.env.tests' => [
   ],
 ];
 ```
@@ -21,7 +21,7 @@ As with any option in Kirby, you should define these options in your `site/confi
 The expected syntax for these configuration options is:
 
 ```php
-'mgfagency.twig.env.functions' => [
+'amteich.twig.env.functions' => [
   'myFunctionName' => $someFunction
 ],
 ```
@@ -52,7 +52,7 @@ function sayHello($who='') {
 You can make it available as a Twig function:
 
 ```php
-'mgfagency.twig.env.functions' => [
+'amteich.twig.env.functions' => [
   'sayHello' => 'sayHello'
 ],
 ```
@@ -65,7 +65,7 @@ You can make it available as a Twig function:
 Or you could expose it as a Twig filter:
 
 ```php
-'mgfagency.twig.env.filters' => [
+'amteich.twig.env.filters' => [
   'sayHello' => 'sayHello'
 ],
 ```
@@ -82,7 +82,7 @@ I recommend sticking to the Twig function syntax, and only using Twig’s built-
 Also anonymous functions (called closures in PHP) are accepted:
 
 ```php
-'mgfagency.twig.env.functions' => [
+'amteich.twig.env.functions' => [
   'sayHello' => function($who='') {
     return 'Hello' . (is_string($who) ? ' ' . $who : '');
   }
@@ -94,7 +94,7 @@ Also anonymous functions (called closures in PHP) are accepted:
 You can also expose static methods, using the string syntax:
 
 ```php
-'mgfagency.twig.env.functions' => [
+'amteich.twig.env.functions' => [
   'setCookie' => 'Cookie::set',
   'getCookie' => 'Cookie::get',
 ],
@@ -118,7 +118,7 @@ By default, Twig escapes strings returned by functions, to avoid security attack
 Alternatively, when declaring a Twig function you can mark it as safe for HTML output by adding a `*` before its name, like this:
 
 ```php
-'mgfagency.twig.env.functions' => [
+'amteich.twig.env.functions' => [
   '*sayHello' => 'sayHello'
 ],
 ```
@@ -141,7 +141,7 @@ class VeryCoolThing
 }
 
 // site/config/config.php
-'mgfagency.twig.env.functions' => [
+'amteich.twig.env.functions' => [
   'getCoolStuff' => function(){
     return new VeryCoolThing();
   }
@@ -164,7 +164,7 @@ Alternatively, you could define and expose a generic function that allows instan
 /**
  * Make a class instance for the provided class name and parameters.
  */
-'mgfagency.twig.env.functions' => [
+'amteich.twig.env.functions' => [
   'new' => function($name) {
     if (!class_exists($name)) {
       throw new Twig_Error_Runtime("Unknown class \"$name\"");

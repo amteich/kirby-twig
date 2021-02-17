@@ -1,9 +1,9 @@
-<?php 
+<?php
 
-namespace mgfagency\Twig;
+namespace amteich\Twig;
 
 class Functions {
-  
+
   public static function error ($msg, $source = null, $context = null) {
     $sourceObj = null;
     if ($source != "") {

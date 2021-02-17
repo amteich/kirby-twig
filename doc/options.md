@@ -5,25 +5,25 @@
 ```php
 // Define a directory as a Twig namespace, that can be used as:
 //   {% include '@mynamespace/something.twig' %}
-'mgfagency.twig.namespaces' => [
+'amteich.twig.namespaces' => [
   'mynamespace' => kirby()->roots()->index() . '/mydirectory',
 ],
 
 // Load an extension
-'mgfagency.twig.extension.intl' => 'Twig\\Extra\\Intl\\IntlExtension',
+'amteich.twig.extension.intl' => 'Twig\\Extra\\Intl\\IntlExtension',
 
 // Expose an existing function in templates
-'mgfagency.twig.env.functions' => [
+'amteich.twig.env.functions' => [
   'myfunction' => 'myCustomFunction'
 ],
 
 // Expose an existing function in templates as a filter
-'mgfagency.twig.env.filters' => [
+'amteich.twig.env.filters' => [
   'myfilter' => 'myCustomFilter'
 ],
 
 // Expose a twig test function for templates
-'mgfagency.twig.env.tests' => [
+'amteich.twig.env.tests' => [
   'of_type' => function ($var, $typeTest) {
       switch ($typeTest)
       {
@@ -54,7 +54,7 @@ See [Using your own functions in templates](functions.md) for details about Twig
 ```php
 // Should we use .php templates as fallback when .twig
 // templates don't exist? Set to false to only allow Twig templates
-'mgfagency.twig.usephp' => true
+'amteich.twig.usephp' => true
 
 // Use Twig’s PHP cache?
 // Enabling Twig's cache can give a speed boost to pages with changing
@@ -62,13 +62,13 @@ See [Using your own functions in templates](functions.md) for details about Twig
 // version of the template when building the response.
 // But if you have static text content in your Twig templates, you won’t
 // see content changes until you manually remove the `site/cache/twig` folder.
-'mgfagency.twig.cache' => false
+'amteich.twig.cache' => false
 
 // Disable autoescaping or specify autoescaping type
 // http://twig.sensiolabs.org/doc/api.html#environment-options
-'mgfagency.twig.autoescape' => true
+'amteich.twig.autoescape' => true
 
 // Should Twig throw errors when using undefined variables or methods?
 // Defaults to the value of the 'debug' option
-'mgfagency.twig.strict' => option('debug', false)
+'amteich.twig.strict' => option('debug', false)
 ```
