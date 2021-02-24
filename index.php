@@ -24,7 +24,7 @@ Kirby::plugin('amteich/twig', [
                 if (file_exists($file) === false) {
                     $file = $kirby->root('snippets') . '/' . $name . '.twig';
                     if (file_exists($file)) {
-                        return twig('@snippets/' . $name . '.twig');
+                        return twig('@snippets/' . $name . '.twig', $data);
                     }
                     else {
                         $file = $kirby->extensions('snippets')[$name] ?? null;
