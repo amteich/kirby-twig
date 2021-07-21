@@ -91,6 +91,7 @@ class Environment
       '*svg' => 'svg',
       't' => 't',
       'tc' => 'tc',
+      'tt' => 'tt',
       '*twitter' => 'twitter',
       'u' => 'u',
       'url' => 'url',
