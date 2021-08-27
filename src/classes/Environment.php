@@ -7,6 +7,7 @@ use Response;
 use Kirby\Cms\App;
 use Kirby\Toolkit\Html;
 use Kirby\Toolkit\Tpl;
+use Kirby\Toolkit\Str;
 
 use \Twig\Environment as Twig_Environment;
 use \Twig\TwigFunction as Twig_Function;
@@ -160,6 +161,13 @@ class Environment
         // add site templates dir if environment got initialized by a plugintemplate
         if ($this->templateDir != $kirby->root('templates')) {
             $loader->addPath($kirby->root('templates'));
+        }
+
+        // add plugin snippet paths
+        foreach ($kirby->extensions('snippets') as $snippetpath => $root) {
+            if (Str::endsWith(strtolower($root), '.twig')) {
+                $loader->addPath(str_replace($snippetpath . '.twig', '', $root));
+            }
         }
 
         // is viewpath in a plugin, add the pluginpath

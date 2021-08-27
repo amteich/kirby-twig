@@ -28,6 +28,10 @@ Kirby::plugin('amteich/twig', [
                     }
                     else {
                         $file = $kirby->extensions('snippets')[$name] ?? null;
+
+                        if (Str::endsWith(strtolower($file), '.twig')) {
+                            return twig($name . '.twig', $data);
+                        }
                     }
                 }
 
