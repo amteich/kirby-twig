@@ -31,7 +31,7 @@ class Template extends \Kirby\Cms\Template
     public function __construct(string $name, string $contentType = 'html', string $defaultType = 'html')
     {
         parent::__construct($name, $contentType, $defaultType);
-        $viewPath    = dirname($this->file());
+        $viewPath = dirname(isset($file) ? $file : '.');
         static::$twig = new Environment($viewPath);
     }
 
