@@ -6,8 +6,20 @@
 // Define a directory as a Twig namespace, that can be used as:
 //   {% include '@mynamespace/something.twig' %}
 'amteich.twig.namespaces' => [
-  'mynamespace' => kirby()->roots()->index() . '/mydirectory',
+  'mynamespace' => 'mydirectory',
 ],
+
+// Define a directory as a Twig namespace using a path given by Kirby.
+// Must be called in Kirby's 'ready' option to have access to the Kirby object.
+// Can be used as:
+//   {% include '@mynamespace/something.twig' %}
+'ready' => function () {
+  return [
+    'amteich.twig.namespaces' => [
+      'mynamespace' => kirby()->root()->index() . '/mydirectory',
+    ]
+  ];
+},
 
 // Load an extension
 'amteich.twig.extension.intl' => 'Twig\\Extra\\Intl\\IntlExtension',
