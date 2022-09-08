@@ -78,7 +78,7 @@ See [Using your own functions in templates](functions.md) for details about Twig
 
 // Disable autoescaping or specify autoescaping type
 // http://twig.sensiolabs.org/doc/api.html#environment-options
-'amteich.twig.autoescape' => true
+'amteich.twig.autoescape' => false | 'html'
 
 // Should Twig throw errors when using undefined variables or methods?
 // Defaults to the value of the 'debug' option
