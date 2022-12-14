@@ -22,7 +22,7 @@
 },
 
 // Load an extension
-'amteich.twig.extension.intl' => 'Twig\\Extra\\Intl\\IntlExtension',
+'amteich.twig.env.extensions.intl' => 'Twig\\Extra\\Intl\\IntlExtension',
 
 // Expose an existing function in templates
 'amteich.twig.env.functions' => [
