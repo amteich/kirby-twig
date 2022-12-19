@@ -111,6 +111,14 @@ class Template extends \Kirby\Cms\Template
     public function render(array $data = []): string
     {
         if ($this->isTwig()) {
+
+            static::$twig->addGlobal('kirby', $data['kirby']);
+            static::$twig->addGlobal('site', $data['site']);
+            static::$twig->addGlobal('pages', $data['pages']);
+            static::$twig->addGlobal('page', $data['page']);
+            static::$twig->addGlobal('user', $data['kirby']->user());
+            static::$twig->addGlobal('users', $data['kirby']->users());
+
             return static::$twig->renderPath($this->name() . '.' . $this->extension(), $data, true);
         }
         return parent::render($data);

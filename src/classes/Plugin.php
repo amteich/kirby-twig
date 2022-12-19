@@ -33,10 +33,17 @@ class Plugin
     {
         if (!is_string($template)) return '';
         $path = strlen($template) <= 256 ? trim($template) : '';
-        $data = array_merge(is_array($userData) ? $userData : [], ['kirby' => kirby()]);
+        $data = is_array($userData) ? $userData : [];
         $data = array_merge($data, Template::$data);
 
         $twig = Environment::instance();
+        $kirby = kirby();
+        $twig->addGlobal('kirby', $kirby);
+        $twig->addGlobal('site', $kirby->site());
+        $twig->addGlobal('pages', $kirby->site()->pages());
+        $twig->addGlobal('page', $kirby->site()->page());
+        $twig->addGlobal('user', $kirby->user());
+        $twig->addGlobal('users', $kirby->users());
 
         // treat template as a path only if it *looks like* a Twig template path
         if (Str::startsWith($path, '@') || Str::endsWith(strtolower($path), '.twig')) {

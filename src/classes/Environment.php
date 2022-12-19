@@ -224,15 +224,12 @@ class Environment
             $this->addCallable('test', $name, $func);
         }
 
-        $this->twig->addGlobal('kirby', kirby());
-        $this->twig->addGlobal('site', site());
-        $this->twig->addGlobal('pages', pages());
-        $this->twig->addGlobal('page', page());
-        $this->twig->addGlobal('user', kirby()->user());
-        $this->twig->addGlobal('users', kirby()->users());
-
         // Make sure the instance is stored / overwritten
         static::$instance = $this;
+    }
+
+    public function addGlobal($name, $value) {
+        $this->twig->addGlobal($name, $value);
     }
 
     /**

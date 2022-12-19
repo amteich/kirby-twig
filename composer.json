@@ -2,7 +2,7 @@
     "name": "amteich/kirby-twig",
     "description": "Twig templating support for Kirby CMS",
     "type": "kirby-plugin",
-    "version": "4.2.0",
+    "version": "4.2.1",
     "license": "MIT",
     "authors": [
         {
