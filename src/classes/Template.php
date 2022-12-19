@@ -20,6 +20,7 @@ use Kirby\Toolkit\F;
 class Template extends \Kirby\Cms\Template
 {
     private static $twig;
+    private string $twigpath;
 
     /**
      * Creates a new template object
@@ -65,6 +66,7 @@ class Template extends \Kirby\Cms\Template
 
         if ($this->hasDefaultType() === true) {
 
+            $this->twigpath = $this->name() . '.twig';
             $base = $this->root() . '/' . $this->name();
             $twig = $base . '.twig';
             $php  = $base . '.php';
@@ -86,6 +88,7 @@ class Template extends \Kirby\Cms\Template
         }
 
         $name = $this->name() . '.' . $type;
+        $this->twigpath = $name . '.twig';
         $base = $this->root() . '/' . $name;
         $twig = $base . '.twig';
         $php  = $base . '.php';
@@ -112,14 +115,16 @@ class Template extends \Kirby\Cms\Template
     {
         if ($this->isTwig()) {
 
-            static::$twig->addGlobal('kirby', $data['kirby']);
-            static::$twig->addGlobal('site', $data['site']);
-            static::$twig->addGlobal('pages', $data['pages']);
-            static::$twig->addGlobal('page', $data['page']);
-            static::$twig->addGlobal('user', $data['kirby']->user());
-            static::$twig->addGlobal('users', $data['kirby']->users());
+            $kirby = kirby();
+            static::$twig->addGlobal('kirby', $kirby);
+            static::$twig->addGlobal('site', $kirby->site());
+            static::$twig->addGlobal('pages', $kirby->site()->pages());
+            static::$twig->addGlobal('page', $kirby->site()->page());
+            static::$twig->addGlobal('user', $kirby->user());
+            static::$twig->addGlobal('users', $kirby->users());
 
-            return static::$twig->renderPath($this->name() . '.' . $this->extension(), $data, true);
+            // $this->name() . '.' . $this->extension()
+            return static::$twig->renderPath($this->twigpath, $data, true);
         }
         return parent::render($data);
     }
