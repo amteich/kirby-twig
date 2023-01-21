@@ -1,3 +1,5 @@
+# ⚠️ Searching for new maintainer: Please let me know if you want to [take this repo on](https://github.com/seehat)
+
 # Twig Plugin for Kirby CMS
 
 <img src="doc/kirby-twig.png" width="200" alt="">
