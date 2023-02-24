@@ -1,4 +1,4 @@
-# ⚠️ Searching for new maintainer: Please let me know if you want to [take this repo on](https://github.com/seehat)
+# ⚠️ This repo moved [here](https://github.com/wearejust/kirby-twig) and is now maintained by wearejust. 
 
 # Twig Plugin for Kirby CMS
 
